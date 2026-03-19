@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <pthread.h>
+
+int num_limit, alpha_limit;
+
+/* Thread 1 - Print Numbers */
+void* task1(void* arg) {
+    printf("\nThread 1: Printing Numbers\n");
+    for(int i = 1; i <= num_limit; i++)
+        printf("%d ", i);
+    printf("\n");
+    return NULL;
+}
+
+/* Thread 2 - Print Alphabets */
+void* task2(void* arg) {
+    printf("\nThread 2: Printing Alphabets\n");
+    for(int i = 0; i < alpha_limit; i++)
+        printf("%c ", 'A' + i);
+    printf("\n");
+    return NULL;
+}
+
+int main() {
+    pthread_t t1, t2;
+
+    printf("Enter limit for numbers: ");
+    scanf("%d", &num_limit);
+
+    printf("Enter number of alphabets to print: ");
+    scanf("%d", &alpha_limit);
+
+    pthread_create(&t1, NULL, task1, NULL);
+    pthread_create(&t2, NULL, task2, NULL);
+
+    pthread_join(t1, NULL);
+    pthread_join(t2, NULL);
+
+    return 0;
+}

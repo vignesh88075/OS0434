@@ -1,0 +1,89 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    FILE *fp;
+    char filename[100];
+    char data[200];
+    int choice;
+    long position;
+
+    printf("----- UNIX I/O SYSTEM CALL SIMULATION -----\n");
+
+    printf("Enter file name: ");
+    scanf("%s", filename);
+
+    fp = fopen(filename, "w+");
+
+    if(fp == NULL)
+    {
+        printf("File cannot be created or opened.\n");
+        return 0;
+    }
+
+    while(1)
+    {
+        printf("\n1. Write to File\n");
+        printf("2. Read from File\n");
+        printf("3. Seek Position\n");
+        printf("4. Display Current Position\n");
+        printf("5. Exit\n");
+
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        if(choice == 1)
+        {
+            printf("Enter text to write: ");
+            scanf(" %[^\n]", data);
+
+            fprintf(fp, "%s\n", data);
+
+            printf("Data written successfully.\n");
+        }
+
+        else if(choice == 2)
+        {
+            rewind(fp);
+
+            printf("File Contents:\n");
+
+            while(fgets(data, sizeof(data), fp) != NULL)
+            {
+                printf("%s", data);
+            }
+        }
+
+        else if(choice == 3)
+        {
+            printf("Enter position to move pointer: ");
+            scanf("%ld", &position);
+
+            fseek(fp, position, SEEK_SET);
+
+            printf("Pointer moved to position %ld\n", position);
+        }
+
+        else if(choice == 4)
+        {
+            position = ftell(fp);
+
+            printf("Current File Pointer Position: %ld\n", position);
+        }
+
+        else if(choice == 5)
+        {
+            fclose(fp);
+            printf("Program terminated.\n");
+            break;
+        }
+
+        else
+        {
+            printf("Invalid choice.\n");
+        }
+    }
+
+    return 0;
+}

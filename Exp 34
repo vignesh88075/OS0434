@@ -1,0 +1,28 @@
+#include <stdio.h>
+
+int main()
+{
+    int blocks[50];
+    int start, length;
+    int i;
+
+    printf("----- SEQUENTIAL FILE ALLOCATION -----\n");
+
+    printf("Enter starting block: ");
+    scanf("%d", &start);
+
+    printf("Enter length of file (number of blocks): ");
+    scanf("%d", &length);
+
+    printf("Allocated Blocks:\n");
+
+    for(i = 0; i < length; i++)
+    {
+        blocks[i] = start + i;
+        printf("Block %d -> %d\n", i + 1, blocks[i]);
+    }
+
+    printf("File stored sequentially.\n");
+
+    return 0;
+}
