@@ -1,0 +1,70 @@
+#include <stdio.h>
+
+int main()
+{
+    int thread1, thread2;
+    int choice;
+
+    printf("---- THREAD CONCEPT SIMULATION ----\n");
+
+    printf("Enter Thread 1 ID: ");
+    scanf("%d", &thread1);
+
+    printf("Enter Thread 2 ID: ");
+    scanf("%d", &thread2);
+
+    while(1)
+    {
+        printf("\n1. Create Threads\n");
+        printf("2. Compare Threads (Equal)\n");
+        printf("3. Join Threads\n");
+        printf("4. Exit Threads\n");
+        printf("5. End Program\n");
+
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        if(choice == 1)
+        {
+            printf("Thread %d created.\n", thread1);
+            printf("Thread %d created.\n", thread2);
+        }
+
+        else if(choice == 2)
+        {
+            if(thread1 == thread2)
+            {
+                printf("Threads are equal.\n");
+            }
+            else
+            {
+                printf("Threads are not equal.\n");
+            }
+        }
+
+        else if(choice == 3)
+        {
+            printf("Thread %d joined.\n", thread1);
+            printf("Thread %d joined.\n", thread2);
+        }
+
+        else if(choice == 4)
+        {
+            printf("Thread %d exited.\n", thread1);
+            printf("Thread %d exited.\n", thread2);
+        }
+
+        else if(choice == 5)
+        {
+            printf("Program finished.\n");
+            break;
+        }
+
+        else
+        {
+            printf("Invalid choice.\n");
+        }
+    }
+
+    return 0;
+}

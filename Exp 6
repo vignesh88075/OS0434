@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <limits.h>
+
+int main() {
+    int n, i, time = 0, completed = 0, highest;
+    printf("Enter number of processes: ");
+    scanf("%d", &n);
+
+    int bt[n], pr[n], rt[n], wt[n], tat[n];
+
+    for(i = 0; i < n; i++) {
+        printf("Enter Burst Time and Priority for P%d: ", i+1);
+        scanf("%d %d", &bt[i], &pr[i]);
+        rt[i] = bt[i];
+    }
+
+    while(completed != n) {
+        highest = -1;
+        int min_pr = INT_MAX;
+
+        for(i = 0; i < n; i++) {
+            if(rt[i] > 0 && pr[i] < min_pr) {
+                min_pr = pr[i];
+                highest = i;
+            }
+        }
+
+        rt[highest]--;
+        time++;
+
+        if(rt[highest] == 0) {
+            completed++;
+            tat[highest] = time;
+            wt[highest] = tat[highest] - bt[highest];
+        }
+    }
+
+    printf("\nProcess\tBT\tPR\tWT\tTAT\n");
+    for(i = 0; i < n; i++)
+        printf("P%d\t%d\t%d\t%d\t%d\n", i+1, bt[i], pr[i], wt[i], tat[i]);
+
+    return 0;
+}

@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    FILE *fp;
+    char filename[100];
+    int count = 0;
+
+    printf("---- SIMULATION OF LS COMMAND ----\n");
+
+    printf("Enter number of files to simulate: ");
+    scanf("%d", &count);
+
+    char files[count][100];
+
+    for(int i = 0; i < count; i++)
+    {
+        printf("Enter file name %d: ", i + 1);
+        scanf("%s", files[i]);
+    }
+
+    printf("\nFiles in Directory:\n");
+
+    for(int i = 0; i < count; i++)
+    {
+        printf("%s\n", files[i]);
+    }
+
+    return 0;
+}

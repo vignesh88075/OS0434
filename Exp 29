@@ -1,0 +1,87 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int mutex = 1;
+    int full = 0;
+    int empty;
+    int bufferSize;
+    int choice;
+
+    printf("---- PRODUCER CONSUMER PROBLEM ----\n");
+
+    printf("Enter buffer size: ");
+    scanf("%d", &bufferSize);
+
+    empty = bufferSize;
+
+    while(1)
+    {
+        printf("\n1. Produce Item\n");
+        printf("2. Consume Item\n");
+        printf("3. Display Buffer Status\n");
+        printf("4. Exit\n");
+
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        if(choice == 1)
+        {
+            if((mutex == 1) && (empty != 0))
+            {
+                mutex = 0;
+
+                full++;
+                empty--;
+
+                printf("Producer produced an item.\n");
+
+                mutex = 1;
+            }
+            else
+            {
+                printf("Buffer is full. Cannot produce.\n");
+            }
+        }
+
+        else if(choice == 2)
+        {
+            if((mutex == 1) && (full != 0))
+            {
+                mutex = 0;
+
+                full--;
+                empty++;
+
+                printf("Consumer consumed an item.\n");
+
+                mutex = 1;
+            }
+            else
+            {
+                printf("Buffer is empty. Cannot consume.\n");
+            }
+        }
+
+        else if(choice == 3)
+        {
+            printf("Buffer Status:\n");
+            printf("Full slots  = %d\n", full);
+            printf("Empty slots = %d\n", empty);
+        }
+
+        else if(choice == 4)
+        {
+            printf("Program terminated.\n");
+            break;
+        }
+
+        else
+        {
+            printf("Invalid choice.\n");
+        }
+    }
+
+    return 0;
+}

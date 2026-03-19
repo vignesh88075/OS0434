@@ -1,0 +1,27 @@
+#include <stdio.h>
+
+int main()
+{
+    int owner, group, others;
+
+    printf("----- FILE ACCESS PERMISSION -----\n");
+
+    printf("Enter owner permission value (0-7): ");
+    scanf("%d", &owner);
+
+    printf("Enter group permission value (0-7): ");
+    scanf("%d", &group);
+
+    printf("Enter others permission value (0-7): ");
+    scanf("%d", &others);
+
+    printf("\nPermission Representation:\n");
+
+    printf("Owner  : %d\n", owner);
+    printf("Group  : %d\n", group);
+    printf("Others : %d\n", others);
+
+    printf("\nExample: chmod %d%d%d file\n", owner, group, others);
+
+    return 0;
+}

@@ -1,0 +1,55 @@
+#include <stdio.h>
+
+void allocate(int block[], int m, int process[], int n, int type){
+    int alloc[n];
+    for(int i=0;i<n;i++) alloc[i] = -1;
+
+    for(int i=0;i<n;i++){
+        int index = -1;
+        for(int j=0;j<m;j++){
+            if(block[j] >= process[i]){
+                if(type==1){ index=j; break; }                  // First Fit
+                if(type==2 && (index==-1 || block[j]<block[index])) index=j; // Best Fit
+                if(type==3 && (index==-1 || block[j]>block[index])) index=j; // Worst Fit
+            }
+        }
+        if(index!=-1){ alloc[i]=index; block[index]-=process[i]; }
+    }
+
+    for(int i=0;i<n;i++)
+        printf("Process %d (%d) -> Block %d\n",i+1,process[i],
+               alloc[i]!=-1?alloc[i]+1:0);
+}
+
+int main(){
+    int m,n;
+    printf("Enter number of blocks: ");
+    scanf("%d",&m);
+    int block[m], b1[m], b2[m], b3[m];
+
+    for(int i=0;i<m;i++){
+        printf("Size of Block %d: ",i+1);
+        scanf("%d",&block[i]);
+        b1[i]=b2[i]=b3[i]=block[i];
+    }
+
+    printf("Enter number of processes: ");
+    scanf("%d",&n);
+    int process[n];
+
+    for(int i=0;i<n;i++){
+        printf("Size of Process %d: ",i+1);
+        scanf("%d",&process[i]);
+    }
+
+    printf("\nFIRST FIT\n");
+    allocate(b1,m,process,n,1);
+
+    printf("\nBEST FIT\n");
+    allocate(b2,m,process,n,2);
+
+    printf("\nWORST FIT\n");
+    allocate(b3,m,process,n,3);
+
+    return 0;
+}

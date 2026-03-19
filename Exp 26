@@ -1,0 +1,99 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    FILE *fp;
+    char filename[100];
+    char text[200];
+    int choice;
+
+    printf("----- FILE MANAGEMENT OPERATIONS -----\n");
+
+    printf("Enter file name: ");
+    scanf("%s", filename);
+
+    while(1)
+    {
+        printf("\n1. Create File\n");
+        printf("2. Write to File\n");
+        printf("3. Read File\n");
+        printf("4. Delete File\n");
+        printf("5. Exit\n");
+
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        if(choice == 1)
+        {
+            fp = fopen(filename, "w");
+
+            if(fp != NULL)
+            {
+                printf("File created successfully.\n");
+                fclose(fp);
+            }
+        }
+
+        else if(choice == 2)
+        {
+            fp = fopen(filename, "a");
+
+            printf("Enter text: ");
+            scanf(" %[^\n]", text);
+
+            fprintf(fp, "%s\n", text);
+
+            fclose(fp);
+
+            printf("Text added to file.\n");
+        }
+
+        else if(choice == 3)
+        {
+            fp = fopen(filename, "r");
+
+            if(fp == NULL)
+            {
+                printf("File not found.\n");
+            }
+
+            else
+            {
+                printf("File Content:\n");
+
+                while(fgets(text, 200, fp) != NULL)
+                {
+                    printf("%s", text);
+                }
+
+                fclose(fp);
+            }
+        }
+
+        else if(choice == 4)
+        {
+            if(remove(filename) == 0)
+            {
+                printf("File deleted successfully.\n");
+            }
+            else
+            {
+                printf("Unable to delete file.\n");
+            }
+        }
+
+        else if(choice == 5)
+        {
+            printf("Program ended.\n");
+            break;
+        }
+
+        else
+        {
+            printf("Invalid choice.\n");
+        }
+    }
+
+    return 0;
+}

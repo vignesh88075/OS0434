@@ -1,0 +1,84 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_USERS 5
+#define MAX_FILES 10
+
+struct Directory {
+    char user[20];
+    char files[MAX_FILES][20];
+    int fileCount;
+};
+
+int main() {
+    struct Directory dir[MAX_USERS];
+    int userCount = 0, choice, found;
+    char uname[20], fname[20];
+
+    while (1) {
+        printf("\n1.Create User  2.Create File  3.Display  4.Exit");
+        printf("\nEnter choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+
+        case 1:
+            if (userCount == MAX_USERS) {
+                printf("User limit reached!\n");
+            } else {
+                printf("Enter user name: ");
+                scanf("%s", uname);
+                strcpy(dir[userCount].user, uname);
+                dir[userCount].fileCount = 0;
+                userCount++;
+                printf("User '%s' created successfully.\n", uname);
+            }
+            break;
+
+        case 2:
+            printf("Enter user name: ");
+            scanf("%s", uname);
+            found = 0;
+
+            for (int i = 0; i < userCount; i++) {
+                if (strcmp(dir[i].user, uname) == 0) {
+                    found = 1;
+
+                    if (dir[i].fileCount == MAX_FILES) {
+                        printf("File limit reached for this user!\n");
+                    } else {
+                        printf("Enter file name: ");
+                        scanf("%s", fname);
+                        strcpy(dir[i].files[dir[i].fileCount++], fname);
+                        printf("File '%s' created for user '%s'.\n", fname, uname);
+                    }
+                    break;
+                }
+            }
+
+            if (!found)
+                printf("User not found!\n");
+            break;
+
+        case 3:
+            if (userCount == 0) {
+                printf("No users available.\n");
+            } else {
+                printf("\nUser -> Files\n");
+                for (int i = 0; i < userCount; i++) {
+                    printf("%s:\n", dir[i].user);
+                    for (int j = 0; j < dir[i].fileCount; j++)
+                        printf("   %d. %s\n", j+1, dir[i].files[j]);
+                }
+            }
+            break;
+
+        case 4:
+            printf("Exiting Program.\n");
+            return 0;
+
+        default:
+            printf("Invalid Choice!\n");
+        }
+    }
+}
