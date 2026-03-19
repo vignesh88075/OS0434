@@ -1,0 +1,84 @@
+#include <stdio.h>
+
+int main()
+{
+    int frames;
+    int pages;
+
+    int reference[50];
+    int frame[10];
+
+    int i, j;
+    int pageFaults = 0;
+    int index = 0;
+    int found;
+
+    printf("------ FIFO PAGE REPLACEMENT ------\n");
+
+    printf("Enter number of frames: ");
+    scanf("%d", &frames);
+
+    printf("Enter number of pages in reference string: ");
+    scanf("%d", &pages);
+
+    printf("Enter reference string:\n");
+
+    for(i = 0; i < pages; i++)
+    {
+        scanf("%d", &reference[i]);
+    }
+
+    /* Initialize frames as empty */
+    for(i = 0; i < frames; i++)
+    {
+        frame[i] = -1;
+    }
+
+    printf("\nPage Replacement Process:\n");
+
+    for(i = 0; i < pages; i++)
+    {
+        found = 0;
+
+        /* Check if page already exists in frame */
+        for(j = 0; j < frames; j++)
+        {
+            if(frame[j] == reference[i])
+            {
+                found = 1;
+                break;
+            }
+        }
+
+        /* If page not found → page fault */
+        if(found == 0)
+        {
+            frame[index] = reference[i];
+
+            index = (index + 1) % frames;
+
+            pageFaults++;
+        }
+
+        /* Display frame status */
+        printf("Frames after inserting %d : ", reference[i]);
+
+        for(j = 0; j < frames; j++)
+        {
+            if(frame[j] != -1)
+            {
+                printf("%d ", frame[j]);
+            }
+            else
+            {
+                printf("- ");
+            }
+        }
+
+        printf("\n");
+    }
+
+    printf("\nTotal Page Faults = %d\n", pageFaults);
+
+    return 0;
+}
